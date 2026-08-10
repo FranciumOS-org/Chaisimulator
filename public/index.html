@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مای پیکسل | MY PIXEL</title>
+<meta name="description" content="مای پیکسل؛ فروشگاه تابلو، فیگور اسکن‌شده و ماشین فلزی کالکشنی">
+<meta name="theme-color" content="#06070A">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- فونت رندر را مسدود نمی‌کند؛ تا رسیدنش متن با فونت سیستم نشان داده می‌شود -->
+<link rel="preload" as="style"
+      href="https://fonts.googleapis.com/css2?family=Estedad:wght@400;600;800&display=swap">
+<link rel="stylesheet" media="print" onload="this.media='all'"
+      href="https://fonts.googleapis.com/css2?family=Estedad:wght@400;600;800&display=swap">
+<noscript><link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Estedad:wght@400;600;800&display=swap"></noscript>
+<script>
+  // قبل از رنگ‌آمیزی صفحه تم را ست کن تا پرش سفید نداشته باشیم
+  (function(){
+    try{
+      var saved = localStorage.getItem('mp_theme');
+      var sys = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.dataset.theme = (saved === 'light' || saved === 'dark') ? saved : sys;
+    }catch(e){ document.documentElement.dataset.theme = 'dark'; }
+  })();
+  </script>
+  <link rel="stylesheet" href="/assets/styles.css">
+  <!-- استایل دوم فقط بخش‌های پایین صفحه را می‌سازد؛ رندر اول را معطل نمی‌کند -->
+  <link rel="stylesheet" href="/assets/styles2.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="/assets/styles2.css"></noscript>
+</head>
+<body>
+
+<!-- ══════════════════ هدر ══════════════════ -->
+<header class="nav" id="siteNav">
+  <div class="wrap">
+    <div class="navbar glass">
+
+      <!-- سمت راست: دکمه پنل + برند -->
+      <div class="nav-side">
+        <button class="icon-btn burger-btn" id="burgerBtn" aria-label="منو" aria-expanded="false" aria-controls="sidePanel">
+          <span class="burger-lines"><span></span><span></span><span></span></span>
+        </button>
+        <a href="/" class="brand" aria-label="مای پیکسل">
+          <svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+            <rect x="1" y="1" width="38" height="38" rx="11" stroke="url(#bg1)" stroke-width="1.4"/>
+            <g fill="#2EE6F5">
+              <rect x="9"  y="10" width="5" height="5" rx="1"/><rect x="26" y="10" width="5" height="5" rx="1"/>
+              <rect x="9"  y="16" width="5" height="5" rx="1"/><rect x="14.5" y="16" width="5" height="5" rx="1" opacity=".62"/>
+              <rect x="20.5" y="16" width="5" height="5" rx="1" opacity=".62"/><rect x="26" y="16" width="5" height="5" rx="1"/>
+              <rect x="9"  y="22" width="5" height="5" rx="1"/><rect x="17.5" y="22" width="5" height="5" rx="1" opacity=".4"/>
+              <rect x="26" y="22" width="5" height="5" rx="1"/>
+              <rect x="9"  y="28" width="5" height="5" rx="1"/><rect x="26" y="28" width="5" height="5" rx="1"/>
+            </g>
+            <defs><linearGradient id="bg1" x1="0" y1="0" x2="40" y2="40">
+              <stop stop-color="#2EE6F5" stop-opacity=".65"/><stop offset="1" stop-color="#2EE6F5" stop-opacity=".12"/>
+            </linearGradient></defs>
+          </svg>
+          <span class="brand-text">
+            <span class="brand-fa" id="brandFa">مای پیکسل</span>
+            <span class="brand-en en">MY PIXEL</span>
+          </span>
+        </a>
+      </div>
+
+      <!-- وسط: جستجوی دسکتاپ -->
+      <div class="search-wrap only-desktop" id="searchWrap">
+        <div class="search-box" id="searchBox">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/>
+          </svg>
+          <input type="text" id="searchInput" data-i18n-ph="search_ph" placeholder="دنبال چی می‌گردی؟"
+                 autocomplete="off" aria-label="جستجو بین محصولات">
+          <button class="search-clear" id="searchClear" aria-label="پاک کردن">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+              <line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/>
+            </svg>
+          </button>
+        </div>
+        <div class="search-results" id="searchResults"></div>
+      </div>
+
+      <!-- سمت چپ -->
+      <div class="nav-side end">
+        <!-- جستجوی موبایل: فقط آیکون -->
+        <button class="icon-btn only-mobile" id="searchMobileBtn" aria-label="جستجو">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/>
+          </svg>
+        </button>
+
+        <!-- زبان: فقط دسکتاپ (در موبایل داخل پنل است) -->
+        <button class="theme-btn only-desktop" id="themeBtn" aria-label="تغییر تم" title="تغییر تم">
+      <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20.5 14.3A8.6 8.6 0 0 1 9.7 3.5a8.8 8.8 0 1 0 10.8 10.8z"/></svg>
+      <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.4v2.4M12 19.2v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.4 12h2.4M19.2 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
+        </button>
+        <button class="lang-btn only-desktop" id="langBtn" aria-label="تغییر زبان">
+          <span class="lang-flag" id="langFlag"></span>
+          <span class="en" id="langLabel">FA</span>
+        </button>
+
+        <!-- حساب کاربری: فقط دسکتاپ (در موبایل داخل پنل است) -->
+        <button class="icon-btn account-btn only-desktop" id="accountBtn">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c0-4.2 3.4-6.6 7.5-6.6s7.5 2.4 7.5 6.6"/>
+          </svg>
+          <span class="label" id="accountBtnLabel" data-i18n="account">حساب کاربری</span>
+        </button>
+
+        <button class="icon-btn cart-btn" id="cartBtn" aria-label="سبد خرید">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="9" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/>
+            <path d="M2.5 3.5h2.2l2.3 11.3a1.7 1.7 0 0 0 1.7 1.4h8.2a1.7 1.7 0 0 0 1.7-1.4L20.2 7H6"/>
+          </svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════ پنل کشویی ══════════════════ -->
+<div class="panel-overlay" id="panelOverlay"></div>
+<aside class="side-panel" id="sidePanel" aria-hidden="true">
+  <div class="panel-head">
+    <a href="/" class="brand">
+      <svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="38" height="38" rx="11" stroke="#2EE6F5" stroke-opacity=".4" stroke-width="1.4"/>
+        <g fill="#2EE6F5">
+          <rect x="9" y="10" width="5" height="5" rx="1"/><rect x="26" y="10" width="5" height="5" rx="1"/>
+          <rect x="9" y="16" width="5" height="5" rx="1"/><rect x="14.5" y="16" width="5" height="5" rx="1" opacity=".62"/>
+          <rect x="20.5" y="16" width="5" height="5" rx="1" opacity=".62"/><rect x="26" y="16" width="5" height="5" rx="1"/>
+          <rect x="9" y="22" width="5" height="5" rx="1"/><rect x="17.5" y="22" width="5" height="5" rx="1" opacity=".4"/>
+          <rect x="26" y="22" width="5" height="5" rx="1"/>
+          <rect x="9" y="28" width="5" height="5" rx="1"/><rect x="26" y="28" width="5" height="5" rx="1"/>
+        </g>
+      </svg>
+      <span class="brand-text"><span class="brand-fa">مای پیکسل</span><span class="brand-en en">MY PIXEL</span></span>
+    </a>
+    <div class="panel-head-acts">
+      <button class="theme-btn" id="themeBtnPanel" aria-label="تغییر تم" title="تغییر تم">
+      <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20.5 14.3A8.6 8.6 0 0 1 9.7 3.5a8.8 8.8 0 1 0 10.8 10.8z"/></svg>
+      <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.4v2.4M12 19.2v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.4 12h2.4M19.2 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
+      </button>
+      <button class="icon-btn" id="panelClose" aria-label="بستن">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- فقط موبایل: زبان + حساب کاربری بالای پنل -->
+  <div class="panel-quick only-mobile">
+    <button class="lang-btn" id="langBtnPanel" aria-label="تغییر زبان">
+      <span class="lang-flag" id="langFlagPanel"></span>
+      <span class="en" id="langLabelPanel">FA</span>
+    </button>
+    <button class="panel-account" id="accountBtnPanel">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+        <circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c0-4.2 3.4-6.6 7.5-6.6s7.5 2.4 7.5 6.6"/>
+      </svg>
+      <span id="accountPanelLabel" data-i18n="account">حساب کاربری</span>
+    </button>
+  </div>
+
+  <nav class="panel-nav" id="panelNav"></nav>
+
+  <div class="panel-foot">
+    <div class="panel-socials">
+      <a href="#" aria-label="اینستاگرام" id="soIg">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+          <rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor"/>
+        </svg>
+      </a>
+      <a href="#" aria-label="تلگرام" id="soTg">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round">
+          <path d="M21 4.5 2.8 11.3l5.2 1.7 2 5.5 2.7-3.3 4.4 3.3z"/><path d="m8 13 9.6-6.6L10 15.2"/>
+        </svg>
+      </a>
+      <a href="/support" aria-label="پشتیبانی">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+          <path d="M4 13a8 8 0 1 1 16 0"/><rect x="2.5" y="13" width="4" height="6" rx="2"/><rect x="17.5" y="13" width="4" height="6" rx="2"/>
+          <path d="M20 19v.6a2.4 2.4 0 0 1-2.4 2.4H13"/>
+        </svg>
+      </a>
+    </div>
+    <p data-i18n="panel_foot">مای پیکسل — اشیای دیجیتال، در دنیای واقعی.</p>
+  </div>
+</aside>
+
+<!-- ══════════════════ جستجوی تمام‌صفحه موبایل ══════════════════ -->
+<div class="search-sheet" id="searchSheet">
+  <div class="search-sheet-head">
+    <div class="search-box" id="searchBoxM">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/>
+      </svg>
+      <input type="text" id="searchInputM" data-i18n-ph="search_ph" placeholder="دنبال چی می‌گردی؟" autocomplete="off">
+    </div>
+    <button class="icon-btn" id="searchSheetClose" aria-label="بستن">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        <line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/>
+      </svg>
+    </button>
+  </div>
+  <div class="search-sheet-body" id="searchResultsM"></div>
+</div>
+
+<!-- ══════════════════ صفحات ══════════════════ -->
+<main id="app">
+
+  <!-- خانه -->
+  <div class="page" id="page-home">
+    <section class="hero">
+      <div class="blob-field" id="blobField">
+        <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="lens"></div>
+      </div>
+      <div class="wrap">
+        <div class="hero-content">
+          <div class="eyebrow" data-i18n="hero_eyebrow">فروشگاه اشیای کالکشنی</div>
+          <h1 data-i18n-html="hero_title">از <span style="color:var(--cyan)">پیکسل</span> تا واقعیت</h1>
+          <p data-i18n="hero_sub">تابلوهای طرح‌دار، فیگورهای اسکن‌شده و ماشین‌های فلزی کالکشنی؛ اشیای خاص برای فضایی که دوستش داری.</p>
+          <div class="hero-actions">
+            <a href="/products" class="btn btn-primary" data-i18n="hero_cta1">دیدن محصولات</a>
+            <a href="/about" class="btn btn-ghost" data-i18n="hero_cta2">درباره مای پیکسل</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <div class="banner-slot" id="banner-home_top"></div>
+
+    <section class="block">
+      <div class="wrap">
+        <div class="block-head">
+          <div>
+            <div class="eyebrow" data-i18n="featured_eyebrow">محصولات ویژه</div>
+            <h2 data-i18n="featured_title">انتخاب‌های این هفته</h2>
+            <p data-i18n="featured_sub">چیزهایی که بیشتر از بقیه دیده و خریده شدن.</p>
+          </div>
+          <a href="/products" class="link-more" data-i18n="see_all">همه محصولات ←</a>
+        </div>
+        <div class="hscroll" data-hs="featured">
+          <button class="hs-nav prev" aria-label="قبلی"></button>
+          <div class="hs-track" id="featuredGrid"></div>
+          <button class="hs-nav next" aria-label="بعدی"></button>
+        </div>
+      </div>
+    </section>
+
+    <div class="banner-slot" id="banner-home_mid"></div>
+
+  <section class="block">
+      <div class="wrap">
+        <div class="block-head">
+          <div>
+            <div class="eyebrow" data-i18n="cat_eyebrow">دسته‌بندی‌ها</div>
+            <h2 data-i18n="cat_title">از کجا شروع کنیم؟</h2>
+          </div>
+          <a href="/categories" class="link-more" data-i18n="see_all_cats">همه دسته‌بندی‌ها ←</a>
+        </div>
+        <div class="cat-list" id="homeCatList"></div>
+      </div>
+    </section>
+
+    <div class="banner-slot" id="banner-home_bottom"></div>
+  </div>
+
+  <!-- دسته‌بندی‌ها -->
+  <div class="page" id="page-categories">
+    <div class="wrap">
+      <div class="page-head">
+        <div class="eyebrow" data-i18n="cat_eyebrow">دسته‌بندی‌ها</div>
+        <h1 data-i18n="cat_page_title">دنیای مای پیکسل</h1>
+        <p data-i18n="cat_page_sub">هر دسته یه قفسه‌ی جداست. روی هرکدوم بزنی محصولاتش فیلتر می‌شه.</p>
+      </div>
+      <div class="cat-list" id="catList"></div>
+    </div>
+  </div>
+
+  <!-- محصولات -->
+  <div class="page" id="page-products">
+    <div class="wrap">
+      <div class="page-head">
+        <div class="eyebrow" data-i18n="prod_eyebrow">فروشگاه</div>
+        <h1 data-i18n="prod_page_title">همه محصولات</h1>
+      </div>
+
+      <div class="filter-bar">
+        <div class="filter-row">
+          <div class="chip-scroll" id="catChips"></div>
+        </div>
+        <div class="filter-row">
+          <div class="field">
+            <label data-i18n="sort_by">مرتب‌سازی</label>
+            <select id="sortSelect">
+              <option value="newest" data-i18n="sort_newest">جدیدترین</option>
+              <option value="popular" data-i18n="sort_popular">پرفروش‌ترین</option>
+              <option value="cheap" data-i18n="sort_cheap">ارزان‌ترین</option>
+              <option value="expensive" data-i18n="sort_expensive">گران‌ترین</option>
+              <option value="name" data-i18n="sort_name">حروف الفبا</option>
+            </select>
+          </div>
+          <div class="field">
+            <label data-i18n="price_max">تا قیمت</label>
+            <input type="range" id="priceRange" min="0" max="1000000" step="50000" style="width:130px">
+            <span id="priceRangeLabel" style="font-size:.8rem;color:var(--cyan);white-space:nowrap"></span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="inStockOnly"><span class="track"></span>
+            <span data-i18n="in_stock_only">فقط موجود</span>
+          </label>
+          <button class="chip" id="resetFilters" data-i18n="reset_filters">پاک کردن فیلترها</button>
+          <span class="result-count" id="resultCount"></span>
+        </div>
+      </div>
+
+      <div class="prod-grid" id="productsGrid"></div>
+      <div class="pagination" id="pagination"></div>
+    </div>
+  </div>
+
+  <!-- جزئیات محصول -->
+  <div class="page" id="page-product">
+    <div class="wrap" id="productDetail"></div>
+  </div>
+
+  <!-- پیگیری سفارش -->
+  <div class="page" id="page-track">
+    <div class="wrap">
+      <div class="page-head">
+        <div class="eyebrow" data-i18n="track_eyebrow">پیگیری سفارش</div>
+        <h1 data-i18n="track_title">سفارشت کجاست؟</h1>
+        <p data-i18n="track_sub">کد پیگیری‌ای که موقع ثبت سفارش گرفتی رو وارد کن تا وضعیت لحظه‌ایش رو ببینی.</p>
+      </div>
+      <div class="track-form">
+        <div class="field">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="1.8">
+            <rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M3 11h18M8 4v3M16 4v3"/>
+          </svg>
+          <input id="trackInput" data-i18n-ph="track_ph" placeholder="مثلاً MP-A7K2X9QP" autocomplete="off">
+        </div>
+        <button class="btn btn-primary" id="trackBtn" data-i18n="track_btn">پیگیری</button>
+      </div>
+      <div id="trackResult"></div>
+    </div>
+  </div>
+
+  <!-- سوالات متداول -->
+  <div class="page" id="page-faq">
+    <div class="wrap">
+      <div class="page-head">
+        <div class="eyebrow" data-i18n="faq_eyebrow">راهنما</div>
+        <h1 data-i18n="faq_title">سوالات متداول</h1>
+        <p data-i18n="faq_sub">اگه جوابت اینجا نبود، از بخش پشتیبانی بهمون پیام بده.</p>
+      </div>
+      <div class="faq-list" id="faqList"></div>
+    </div>
+  </div>
+
+  <!-- اطلاعیه‌ها -->
+  <div class="page" id="page-announcements">
+    <div class="wrap">
+      <div class="page-head">
+        <div class="eyebrow" data-i18n="ann_eyebrow">اطلاعیه‌ها</div>
+        <h1 data-i18n="ann_title">تازه‌ها و اطلاعیه‌ها</h1>
+        <p data-i18n="ann_sub">خبرهای فروشگاه، تخفیف‌ها و تغییرات ارسال اینجا اعلام می‌شه.</p>
+      </div>
+      <div class="ann-list" id="annList"></div>
+    </div>
+  </div>
+
+  <!-- درباره ما -->
+  <div class="page" id="page-about">
+    <div class="wrap">
+      <div class="page-head">
+        <div class="eyebrow" data-i18n="about_eyebrow">درباره ما</div>
+        <h1 data-i18n="about_title">مای پیکسل چیه؟</h1>
+      </div>
+      <p class="about-lead" data-i18n="about_lead">مای پیکسل جاییه که ایده‌های دیجیتال به اشیای واقعی تبدیل می‌شن؛ برای کسایی که دنبال کالکشن‌هایی متفاوت از همیشه‌ان.</p>
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="ii"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2.5 3.5 7v10L12 21.5 20.5 17V7z"/><path d="M12 12 3.5 7M12 12l8.5-5M12 12v9.5"/></svg></div>
+          <h3 data-i18n="about_c1_t">از اسکن تا قفسه</h3>
+          <p data-i18n="about_c1_d">مدل‌ها با اسکنر سه‌بعدی گرفته می‌شن، رزینی پرینت می‌شن و آخرش با دست رنگ می‌خورن.</p>
+        </div>
+        <div class="info-card">
+          <div class="ii"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20.5 12c0 4.7-3.8 8.5-8.5 8.5S3.5 16.7 3.5 12 7.3 3.5 12 3.5"/><path d="m8.5 12 2.5 2.5 6-6.5"/></svg></div>
+          <h3 data-i18n="about_c2_t">تعداد محدود</h3>
+          <p data-i18n="about_c2_d">هر مدل در تیراژ کم تولید می‌شه. وقتی تموم شد، دوباره تولید نمی‌شه.</p>
+        </div>
+        <div class="info-card">
+          <div class="ii"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2.5" y="6" width="19" height="13" rx="2.5"/><path d="M2.5 10.5h19M6.5 15h4"/></svg></div>
+          <h3 data-i18n="about_c3_t">پرداخت و ارسال امن</h3>
+          <p data-i18n="about_c3_d">پرداخت از درگاه بانکی و بسته‌بندی ضدضربه؛ کد پیگیری هم لحظه‌ای به‌روز می‌شه.</p>
+        </div>
+      </div>
+      <div class="about-text">
+        <h2 data-i18n="about_story_t">چطور شروع شد</h2>
+        <p data-i18n="about_story_1">شروعش یه اسکنر سه‌بعدی بود و چند تا فیگور که فقط برای خودمون ساختیم. کم‌کم دوستا سفارش دادن، بعد دوستِ دوستا، و آخرش شد یه فروشگاه.</p>
+        <p data-i18n="about_story_2">الان روی سه چیز تمرکز داریم: تابلوهای طرح‌دار، فیگورهای اسکن‌شده و ماشین‌های فلزی کالکشنی. هر کدوم رو خودمون قبل از ارسال چک می‌کنیم.</p>
+        <h2 style="margin-top:28px" data-i18n="about_contact_t">راه ارتباطی</h2>
+        <p data-i18n="about_contact_1">اگه سوالی داری یا دنبال یه مدل خاصی می‌گردی، از بخش پشتیبانی پیام بده. معمولاً همون روز جواب می‌دیم.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- پشتیبانی -->
+  <!-- ═══════ تسویه حساب ═══════ -->
+  <div class="page" id="page-checkout"><div class="wrap">
+    <div class="section-head"><h2>تکمیل سفارش</h2></div>
+    <div id="checkoutBody"></div>
+  </div></div>
+
+  <!-- ═══════ حساب کاربری ═══════ -->
+  <div class="page" id="page-account"><div class="wrap">
+    <div class="section-head"><h2 id="acctTitle">حساب کاربری</h2><p id="acctSub"></p></div>
+    <div class="acct-tabs" id="acctTabs"></div>
+    <div id="acctBody"></div>
+  </div></div>
+
+  <!-- ═══════ لیست علاقه‌مندی‌ها ═══════ -->
+  <div class="page" id="page-wishlist"><div class="wrap">
+    <div class="section-head"><h2>لیست علاقه‌مندی‌ها</h2><p>محصولاتی که نگه داشتی.</p></div>
+    <div id="wishBody"></div>
+  </div></div>
+
+  <!-- ═══════ قوانین مرجوعی ═══════ -->
+  <!-- ═══════ پلتفرم‌ها ═══════ -->
+  <div class="page" id="page-platforms"><div class="wrap">
+    <div class="section-head"><h2 data-i18n="nav_platforms">پلتفرم‌ها</h2>
+      <p data-i18n="plat_head">مای پیکسل کجاها فعاله؟</p></div>
+    <div id="platformsBody"></div>
+  </div></div>
+
+  <!-- ═══════ قوانین و مقررات ═══════ -->
+  <div class="page" id="page-terms"><div class="wrap">
+    <div class="section-head"><h2 id="termsTitle">قوانین و مقررات</h2><p id="termsUpdated"></p></div>
+    <div id="termsBody"></div>
+  </div></div>
+
+  <!-- ═══════ ۴۰۴ ═══════ -->
+  <div class="page" id="page-404"><div class="wrap">
+    <div class="nf">
+      <div class="nf-art">
+        <span class="nf-num">۴</span>
+        <span class="nf-pix">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </span>
+        <span class="nf-num">۴</span>
+      </div>
+      <h2 data-i18n="nf_title">این صفحه پیدا نشد</h2>
+      <p data-i18n="nf_sub">شاید آدرس اشتباه تایپ شده یا این صفحه جابه‌جا شده. از این‌جا ادامه بده:</p>
+      <div class="nf-acts">
+        <a class="btn btn-primary" href="/" data-i18n="nav_home">خانه</a>
+        <a class="btn btn-ghost" href="/products" data-i18n="nav_products">محصولات</a>
+        <a class="btn btn-ghost" href="/support" data-i18n="nav_support">پشتیبانی</a>
+      </div>
+      <div class="nf-search">
+        <span data-i18n="nf_search">دنبال چیز خاصی می‌گردی؟</span>
+        <div class="nf-box">
+          <input type="text" id="nfInput" placeholder="نام محصول یا دسته‌بندی">
+          <button id="nfGo" aria-label="جستجو"></button>
+        </div>
+      </div>
+      <p class="nf-path" id="nfPath"></p>
+    </div>
+  </div></div>
+
+  <div class="page" id="page-returns"><div class="wrap">
+    <div class="section-head"><h2>قوانین مرجوعی</h2><p>شرایط بازگشت کالا و ثبت درخواست.</p></div>
+    <div id="returnsBody"></div>
+  </div></div>
+
+  <!-- ═══════ اطلاعات حمل و نقل ═══════ -->
+  <div class="page" id="page-shipping"><div class="wrap">
+    <div class="section-head"><h2>اطلاعات حمل و نقل</h2><p>چطور و با چه سرویسی بسته‌ات می‌رسه.</p></div>
+    <div id="shippingBody"></div>
+  </div></div>
+
+  <div class="page" id="page-support">
+    <div class="wrap">
+      <div class="page-head">
+        <div class="eyebrow" data-i18n="support_eyebrow">پشتیبانی</div>
+        <h1 data-i18n="support_title">کمک می‌خوای؟</h1>
+        <p data-i18n="support_sub">سریع‌ترین راه تلگرامه. اگه درباره سفارشته، کد پیگیری رو هم بفرست.</p>
+      </div>
+      <div class="info-grid" id="supportGrid"></div>
+      <div class="about-text">
+        <h2 data-i18n="support_before_t">قبل از پیام دادن</h2>
+        <p data-i18n="support_before_1">اگه سوالت درباره‌ی زمان ارسال، مرجوعی یا کد پیگیریه، احتمالاً جوابش توی <a href="/faq" style="color:var(--cyan)">سوالات متداول</a> هست.</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ══════════════════ پاورقی ══════════════════ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <a href="/" class="brand">
+          <svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+            <rect x="1" y="1" width="38" height="38" rx="11" stroke="#2EE6F5" stroke-opacity=".35" stroke-width="1.4"/>
+            <g fill="#2EE6F5">
+              <rect x="9" y="10" width="5" height="5" rx="1"/><rect x="26" y="10" width="5" height="5" rx="1"/>
+              <rect x="9" y="16" width="5" height="5" rx="1"/><rect x="14.5" y="16" width="5" height="5" rx="1" opacity=".62"/>
+              <rect x="20.5" y="16" width="5" height="5" rx="1" opacity=".62"/><rect x="26" y="16" width="5" height="5" rx="1"/>
+              <rect x="9" y="22" width="5" height="5" rx="1"/><rect x="17.5" y="22" width="5" height="5" rx="1" opacity=".4"/>
+              <rect x="26" y="22" width="5" height="5" rx="1"/>
+              <rect x="9" y="28" width="5" height="5" rx="1"/><rect x="26" y="28" width="5" height="5" rx="1"/>
+            </g>
+          </svg>
+          <span class="brand-text"><span class="brand-fa">مای پیکسل</span><span class="brand-en en">MY PIXEL</span></span>
+        </a>
+        <p style="color:var(--text-2); margin-top:14px; max-width:270px; font-size:.88rem;" data-i18n="foot_tagline">اشیای دیجیتال، در دنیای واقعی.</p>
+        <div class="trust-row" id="trustRow"></div>
+      </div>
+      <div class="foot-links">
+        <div class="foot-col">
+          <h4 data-i18n="foot_col1">فروشگاه</h4>
+          <a href="/products" data-i18n="nav_products">محصولات</a>
+          <a href="/categories" data-i18n="nav_categories">دسته‌بندی‌ها</a>
+          <a href="/track" data-i18n="nav_track">پیگیری سفارش</a>
+          <a href="/platforms" data-i18n="nav_platforms">پلتفرم‌ها</a>
+        </div>
+        <div class="foot-col">
+          <h4 data-i18n="foot_col2">راهنما</h4>
+          <a href="/faq" data-i18n="nav_faq">سوالات متداول</a>
+          <a href="/returns" data-i18n="nav_returns">قوانین مرجوعی</a>
+          <a href="/terms" data-i18n="nav_terms">قوانین و مقررات</a>
+          <a href="/shipping" data-i18n="nav_shipping">اطلاعات حمل و نقل</a>
+          <a href="/track" data-i18n="nav_track">پیگیری سفارش</a>
+          <a href="/announcements" data-i18n="nav_ann">اطلاعیه‌ها</a>
+          <a href="/about" data-i18n="nav_about">درباره ما</a>
+        </div>
+        <div class="foot-col">
+          <h4 data-i18n="foot_col3">ارتباط</h4>
+          <a href="/support" data-i18n="nav_support">پشتیبانی</a>
+          <a href="#" id="footIg" data-i18n="foot_ig">اینستاگرام</a>
+          <a href="#" id="footTg" data-i18n="foot_tg">تلگرام</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <span data-i18n="foot_copy">© ۱۴۰۵ مای پیکسل. تمامی حقوق محفوظ است.</span>
+      <span class="en">MY PIXEL</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════ سبد خرید ══════════════════ -->
+<div class="drawer-overlay" id="cartOverlay"></div>
+<aside class="cart-drawer" id="cartDrawer" aria-hidden="true">
+  <div class="drawer-head">
+    <h3 data-i18n="cart_title">سبد خرید</h3>
+    <button class="icon-btn" id="cartClose" aria-label="بستن">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        <line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/>
+      </svg>
+    </button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="drawer-foot">
+    <div class="total-row"><span data-i18n="cart_subtotal">جمع سبد</span><span id="cartSubtotal">۰</span></div>
+    <div class="total-row"><span data-i18n="cart_shipping">هزینه ارسال</span><span id="cartShipping">۰</span></div>
+    <div class="total-row grand"><span data-i18n="cart_total">قابل پرداخت</span><span id="cartTotal">۰</span></div>
+    <button class="btn btn-primary btn-block" id="checkoutBtn" data-i18n="cart_checkout">ادامه و ثبت سفارش</button>
+  </div>
+</aside>
+
+<!-- ══════════════════ مودال حساب کاربری ══════════════════ -->
+<div class="modal-overlay" id="accountOverlay"></div>
+
+<!-- ═══════ اشتراک‌گذاری ═══════ -->
+<div class="share-pop" id="sharePop" role="dialog" aria-modal="true">
+  <button class="modal-close" id="shareClose" aria-label="بستن">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+      <line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
+  </button>
+  <h3>اشتراک‌گذاری</h3>
+  <p id="shareName">این محصول رو با دوستات به اشتراک بذار</p>
+  <div class="share-net" id="shareNet"></div>
+  <div class="copy-row">
+    <input id="shareUrl" readonly>
+    <button id="shareCopy">کپی</button>
+  </div>
+</div>
+
+<div class="account-modal" id="accountModal" role="dialog" aria-modal="true" aria-hidden="true">
+  <button class="modal-close" id="accountClose" aria-label="بستن">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+      <line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/>
+    </svg>
+  </button>
+  <div id="accountBody"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="/assets/icons.js"></script>
+<script src="/assets/app.js"></script>
+</body>
+</html>

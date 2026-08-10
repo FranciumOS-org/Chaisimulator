@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none">
+  <rect x="1" y="1" width="38" height="38" rx="11" fill="#06070A" stroke="url(#g)" stroke-width="1.4"/>
+  <g fill="#2EE6F5">
+    <rect x="9" y="10" width="5" height="5" rx="1"/><rect x="26" y="10" width="5" height="5" rx="1"/>
+    <rect x="9" y="16" width="5" height="5" rx="1"/><rect x="14.5" y="16" width="5" height="5" rx="1" opacity=".62"/>
+    <rect x="20.5" y="16" width="5" height="5" rx="1" opacity=".62"/><rect x="26" y="16" width="5" height="5" rx="1"/>
+    <rect x="9" y="22" width="5" height="5" rx="1"/><rect x="17.5" y="22" width="5" height="5" rx="1" opacity=".4"/>
+    <rect x="26" y="22" width="5" height="5" rx="1"/>
+    <rect x="9" y="28" width="5" height="5" rx="1"/><rect x="26" y="28" width="5" height="5" rx="1"/>
+  </g>
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="40" y2="40">
+      <stop stop-color="#2EE6F5" stop-opacity=".65"/><stop offset="1" stop-color="#2EE6F5" stop-opacity=".12"/>
+    </linearGradient>
+  </defs>
+</svg>
