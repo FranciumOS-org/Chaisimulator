@@ -222,7 +222,12 @@ process.on('uncaughtException', (err) => {
   if (err && (err.code === 'EADDRINUSE' || err.code === 'EACCES')) process.exit(1);
 });
 
-app.listen(PORT, () => {
-  console.log(`\n  مای پیکسل روی http://localhost:${PORT} بالا اومد`);
-  console.log(`  پنل مدیریت: http://localhost:${PORT}/admin\n`);
-});
+if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`\n  مای پیکسل روی http://localhost:${PORT} بالا اومد`);
+    console.log(`  پنل مدیریت: http://localhost:${PORT}/admin\n`);
+  });
+}
+
+// Export app for Vercel serverless functions
+module.exports = app;
