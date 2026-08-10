@@ -13,8 +13,8 @@
     "backup": "node backup.js"
   },
   "dependencies": {
-    "@libsql/client": "^0.17.4",
     "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^13.0.3",
     "compression": "^1.7.5",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
