@@ -7,16 +7,17 @@ const cookieParser = require('cookie-parser');
 
 const { migrate, db } = require('./lib/db');
 const { attachUser } = require('./middleware/auth');
+const runSeed = require('./seed');
 
 // Run migrations
 migrate();
 
-// Auto-seed if database is empty (e.g. running on Vercel's /tmp)
+// Auto-seed on startup if the database is fresh/empty
 try {
   const prodCheck = db.prepare('SELECT COUNT(*) as count FROM products').get();
   if (!prodCheck || prodCheck.count === 0) {
     console.log('Database empty. Running seed...');
-    require('./seed');
+    runSeed();
   }
 } catch (err) {
   console.error('Auto-seed check failed:', err);
@@ -48,7 +49,6 @@ app.use(attachUser);
 app.get('/api/health', (_req, res) => res.json({ ok: true, name: 'مای پیکسل', time: new Date().toISOString() }));
 // ═══════ حالت تعمیر و نگهداری ═══════
 // همه‌چیز بسته می‌شود جز: پنل ادمین، API ادمین، ورود، فایل‌های استاتیک
-const { db } = require('./lib/db');
 function isMaintenance() {
   try {
     const r = db.prepare("SELECT value FROM settings WHERE key = 'maintenance'").get();
