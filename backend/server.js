@@ -5,8 +5,22 @@ const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
-const { migrate } = require('./lib/db');
+const { migrate, db } = require('./lib/db');
 const { attachUser } = require('./middleware/auth');
+
+// Run migrations
+migrate();
+
+// Auto-seed if database is empty (e.g. running on Vercel's /tmp)
+try {
+  const prodCheck = db.prepare('SELECT COUNT(*) as count FROM products').get();
+  if (!prodCheck || prodCheck.count === 0) {
+    console.log('Database empty. Running seed...');
+    require('./seed');
+  }
+} catch (err) {
+  console.error('Auto-seed check failed:', err);
+}
 
 const authRoutes = require('./routes/auth');
 const shopRoutes = require('./routes/shop');
