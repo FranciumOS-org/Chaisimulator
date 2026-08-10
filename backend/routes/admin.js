@@ -22,8 +22,18 @@ function recalcRating(productId) {
 router.use(requireAdmin);            // ← همه‌ی مسیرهای زیر فقط برای ادمین
 
 // ===================== آپلود تصویر =====================
-const UPLOAD_DIR = process.env.UPLOAD_DIR || path.join(__dirname, '..', '..', 'public', 'uploads');
-if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+// On Vercel, route uploads to the writable /tmp directory. Otherwise, use the local public folder.
+const UPLOAD_DIR = process.env.VERCEL 
+  ? '/tmp/uploads' 
+  : (process.env.UPLOAD_DIR || path.join(__dirname, '..', '..', 'public', 'uploads'));
+
+try {
+  if (!fs.existsSync(UPLOAD_DIR)) {
+    fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+  }
+} catch (err) {
+  console.warn('[Warning] Could not create uploads directory. Running on read-only file system.');
+}
 
 const upload = multer({
   storage: multer.diskStorage({
